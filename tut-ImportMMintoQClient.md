@@ -28,8 +28,6 @@ It is assumed you have docker and docker compose installed on your system. You c
 In case you get a permission error, try to check version with `sudo`.
 In case you use old docker-compose check version with `$ docker-compose --version`.
 
-Follow the steps in the official Q Blockchain guide until ste
-
 Clone Q Blockchain testnet public tools repository onto your machine
 
 `$ git clone https://gitlab.com/q-dev/testnet-public-tools`
@@ -108,12 +106,18 @@ In the geth console type
 
 make sure to use `" "` with key and password.
 
-The output should be your public wallet address starting with `0x`. Example: `"0xb***c"`. 
+The output should be your public wallet address starting with `0x`. Example: `"0xb*******************c"`. 
 Compare this with your metamask account public wallet address from Step 1 and they should be identical. 
+
+![Step3](./pics/02-importOutput.png "Step 3")
 
 Now, exit the geth console with `Ctr + d`
 
-Check folder `keystore` was generated inside `testnet-validator` folder. Inside `testnet-validator` do `ls -l` and confirm it is there. 
+Check folder `keystore` was generated inside `testnet-validator` folder. Inside `testnet-validator` do `ls -l` and confirm it is there.
+
+Per default, the owner of the keystore folder will be root. To change ownership to your user account use
+
+`$ sudo chown -R $USER:$USER ./keystore/`
 
 Go into the folder and check keystore file was generated:
 
@@ -125,11 +129,19 @@ And the directoy should contain a file starting with `UTC`, example: `UTC--2023-
 
 Note that the last part of keystore file is your wallet address without `0x`. 
 
-Congratulations, you can now continue with the official setup guide and use public address from metamask ass validator address.
+Create empty file `pwd.txt` 
 
-##Step 4 Cleanup
+`$ touch pwd.txt`
 
-Shutdown the client with 
+and edit with nano 
+
+`nano pwd.txt`
+
+Insert your password, example `secure-password-123` wihtout any `" "`.
+
+Congratulations, you can now continue with the official setup guide and use public address from metamask as validator address.
+
+## Step 4 Cleanup
 
 Go back inside the `testnet-validator` folder. Shutdown the client with 
 
@@ -159,6 +171,8 @@ entrypoint: [
       "--rpc.allow-unprotected-txs"
     ]
 ```
+
+Continue now with your node setup and make sure to use the imported wallet address and keystore file. 
 
 
 
